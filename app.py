@@ -23,11 +23,11 @@ import streamlit as st
 from datetime import date
 
 #User Inputs
-risk_free_rate=0.061
+risk_free_rate=0.0608
 #======================================================================================
 #Grow access keys
-user_api_key = "eyJraWQiOiJaTUtjVXciLCJhbGciOiJFUzI1NiJ9.eyJleHAiOjI1NzEyMDQ1NTEsImlhdCI6MTc4MjgwNDU1MSwibmJmIjoxNzgyODA0NTUxLCJzdWIiOiJ7XCJ0b2tlblJlZklkXCI6XCIwNDY2MzA5OC1iYThjLTRhYjQtOGQ4Yy04Y2Y3ZjFmOTYzY2VcIixcInZlbmRvckludGVncmF0aW9uS2V5XCI6XCJlMzFmZjIzYjA4NmI0MDZjODg3NGIyZjZkODQ5NTMxM1wiLFwidXNlckFjY291bnRJZFwiOlwiMjcyOTY2YzktMDUwZS00ZmNjLTkwZDMtM2QwZWI4YjhhNzk5XCIsXCJkZXZpY2VJZFwiOlwiYWM0ZTM5YTYtNTRhNC01MjcyLWEyMmUtNzBmMTEwMzdmOTBhXCIsXCJzZXNzaW9uSWRcIjpcImI4NmI2MWM3LWE3YjItNDdjMS05Nzg2LTI4NTYzOGJlZGQ3MVwiLFwiYWRkaXRpb25hbERhdGFcIjpcIno1NC9NZzltdjE2WXdmb0gvS0EwYk5nOU15TmhuRzB2NkVSQTl6YVdUcmxSTkczdTlLa2pWZDNoWjU1ZStNZERhWXBOVi9UOUxIRmtQejFFQisybTdRPT1cIixcInJvbGVcIjpcImF1dGgtdG90cFwiLFwic291cmNlSXBBZGRyZXNzXCI6XCIxMjUuMjIuMjMyLjE3OCwxNzIuNjkuODcuMjksMzUuMjQxLjIzLjEyM1wiLFwidHdvRmFFeHBpcnlUc1wiOjI1NzEyMDQ1NTE1MDIsXCJ2ZW5kb3JOYW1lXCI6XCJncm93d0FwaVwifSIsImlzcyI6ImFwZXgtYXV0aC1wcm9kLWFwcCJ9.EBQ7Yv7h0FeeF70WYYtpqd2rv0NGWb4dFo78TcHeOG28n3wC5jBfDkQqwZlwL2fWOmPufu5c3XsAhXE1yCYl8Q"
-user_secret = "H)_TzqX^XQZ@v0QVLoSkxHzY@5l%-lw6"
+user_api_key = os.getenv("GROWW_API_KEY")
+user_secret = os.getenv("GROWW_SECRET")
 
 access_token = GrowwAPI.get_access_token(api_key = user_api_key, secret = user_secret) 
 groww = GrowwAPI(access_token)
@@ -42,13 +42,14 @@ groww = GrowwAPI(access_token)
 #print(current_future_price)
 #===================================================================================
 #Defining paths for input and output
-input_path = "C:/Users/Python/Desktop/Tarun/Risk Array/Input" # Input path used for picking up the input files
-storage_path = "C:/Users/Python/Desktop/Tarun/Risk Array/Output" 
-folder = Path(input_path)
+#input_path = "C:/Users/Python/Desktop/Tarun/Risk Array/Input" # Input path used for picking up the input files
+#storage_path = "C:/Users/Python/Desktop/Tarun/Risk Array/Output" 
+#folder = Path(input_path)
 
+BASE_DIR = Path(__file__).parent
 #======================================================================================
 #Reading the ELM file
-ELM_File_Path = next(folder.glob("DailyMargin*"), None)
+ELM_File_Path = next(BASE_DIR.glob("DailyMargin*"), None)
 if not ELM_File_Path: 
     raise FileNotFoundError(fr"No Daily Margin file present in the folder location "+ input_path)
 
@@ -95,7 +96,7 @@ for i in range(len(ELM_file)):
     elm_short_margin_percentage_dict[key] = float(ELM_file.loc[i, "ELM Short (%)"])/100
 #==================================================================================================================
 #Reading span file
-span_file_path = next(folder.glob("MCXRPF*"), None)
+span_file_path = next(BASE_DIR.glob("MCXRPF*"), None)
 tree = etree.parse(span_file_path)
 root = tree.getroot()
 #==================================================================================================================
