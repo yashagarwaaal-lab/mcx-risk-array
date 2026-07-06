@@ -619,17 +619,28 @@ with col1:
 
 with col2:
 
-    expiry = st.selectbox(
-        "Expiry",
-        futures_expiry_dict[ticker],
-        format_func=lambda x: datetime.strptime(
-            x,
-            "%Y%m%d"
-        ).strftime("%d-%b-%Y")
-    )
+    if derivative == "Futures":
+        expiry = st.selectbox(
+            "Expiry",
+            futures_expiry_dict[ticker],
+            format_func=lambda x: datetime.strptime(
+                x,
+                "%Y%m%d"
+            ).strftime("%d-%b-%Y")
+        )
 
-    option_type = ""
-    strike = 0
+        option_type = ""
+        strike = 0
+
+    elif derivative == "Options":
+        expiry = st.selectbox(
+            "Expiry",
+            options_expiry_dict[ticker],
+            format_func=lambda x: datetime.strptime(
+                x,
+                "%Y%m%d"
+            ).strftime("%d-%b-%Y")
+        )
 
     if derivative == "Options":
 
