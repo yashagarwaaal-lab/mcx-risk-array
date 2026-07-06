@@ -374,12 +374,12 @@ def margin_calculator(Ticker,Side,Derivative_Type,Option_Type,Scenario,Specified
                 risk_array=call_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Risk Array"]
                 d=call_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Delta"]
                 price=call_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Price"]
-                current_option_symbol="MCX_"+ticker+day_ex+month_ex+year_ex[2:4]+str(Strike_Price)+"CE"
+                current_option_symbol="MCX_"+ticker+day_ex+month_ex+year_ex[2:4]+str(int(Strike_Price))+"CE"
             else:
                 risk_array=put_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Risk Array"]
                 d=put_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Delta"]
                 price=put_name_expiry_strike[(ticker,Expiry_date,Strike_Price)]["Price"]
-                current_option_symbol="MCX_"+ticker+day_ex+month_ex+year_ex[2:4]+str(Strike_Price)+"PE"
+                current_option_symbol="MCX_"+ticker+day_ex+month_ex+year_ex[2:4]+str(int(Strike_Price))+"PE"
             opt_price_response = groww.get_ltp(
                 segment=groww.SEGMENT_COMMODITY,
                 exchange_trading_symbols=current_option_symbol
